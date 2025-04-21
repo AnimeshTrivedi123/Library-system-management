@@ -21,8 +21,8 @@ Project Structure
 Database Creation: Created a database named library_db.
 Table Creation: Created tables for branches, employees, members, books, issued status, and return status. Each table includes relevant columns and relationships.
 
+'''sql
 CREATE DATABASE library_db;
-
 DROP TABLE IF EXISTS branch;
 CREATE TABLE branch
 (
@@ -32,6 +32,7 @@ CREATE TABLE branch
             contact_no VARCHAR(15)
 );
 
+'''
 
 -- Create table "Employee"
 DROP TABLE IF EXISTS employees;
