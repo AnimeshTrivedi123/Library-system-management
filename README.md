@@ -21,7 +21,7 @@ Project Structure
 Database Creation: Created a database named library_db.
 Table Creation: Created tables for branches, employees, members, books, issued status, and return status. Each table includes relevant columns and relationships.
 
-'''sql
+```sql
 CREATE DATABASE library_db;
 DROP TABLE IF EXISTS branch;
 CREATE TABLE branch
@@ -32,7 +32,7 @@ CREATE TABLE branch
             contact_no VARCHAR(15)
 );
 
-'''
+
 
 -- Create table "Employee"
 DROP TABLE IF EXISTS employees;
@@ -103,6 +103,8 @@ CREATE TABLE return_status
             FOREIGN KEY (return_book_isbn) REFERENCES books(isbn)
 );
 
+```
+
 2. CRUD Operations
 Create: Inserted sample records into the books table.
 Read: Retrieved and displayed data from various tables.
@@ -110,36 +112,49 @@ Update: Updated records in the employees table.
 Delete: Removed records from the members table as needed.
 Task 1. Create a New Book Record -- "978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.')"
 
+```sql
 INSERT INTO books(isbn, book_title, category, rental_price, status, author, publisher)
 VALUES('978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.');
 SELECT * FROM books;
+```
 
 Task 2: Update an Existing Member's Address
 
+```sql
 UPDATE members
 SET member_address = '125 Oak St'
 WHERE member_id = 'C103';
+```
+
 Task 3: Delete a Record from the Issued Status Table -- Objective: Delete the record with issued_id = 'IS121' from the issued_status table.
 
+```sql
 DELETE FROM issued_status
 WHERE   issued_id =   'IS121';
-Task 4: Retrieve All Books Issued by a Specific Employee -- Objective: Select all books issued by the employee with emp_id = 'E101'.
+```
 
+Task 4: Retrieve All Books Issued by a Specific Employee -- Objective: Select all books issued by the employee with emp_id = 'E101'.
+```sql
 SELECT * FROM issued_status
 WHERE issued_emp_id = 'E101'
+```
 Task 5: List Members Who Have Issued More Than One Book -- Objective: Use GROUP BY to find members who have issued more than one book.
-
+```sql
 SELECT
     issued_emp_id,
     COUNT(*)
 FROM issued_status
 GROUP BY 1
 HAVING COUNT(*) > 1
+```
+
 3. CTAS (Create Table As Select)
 Task 6: Create Summary Tables: Used CTAS to generate new tables based on query results - each book and total book_issued_cnt**
+```sql
 CREATE TABLE book_issued_cnt AS
 SELECT b.isbn, b.book_title, COUNT(ist.issued_id) AS issue_count
 FROM issued_status as ist
 JOIN books as b
 ON ist.issued_book_isbn = b.isbn
 GROUP BY b.isbn, b.book_title;
+```
